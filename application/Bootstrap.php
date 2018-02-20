@@ -61,7 +61,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         Service_Search::getInstance()
             ->addSearchStrategy(new Strategy_Search_Genre)
-            ->addSearchStrategy(new Strategy_Search_Showing);
+            ->addSearchStrategy(new Strategy_Search_Showing)
+            ->setOrderStrategy(new Strategy_Order_Rating);
         
         Zend_Registry::set('Search', Service_Search::getInstance());
         date_default_timezone_set($this->_config['timezone']['default']);

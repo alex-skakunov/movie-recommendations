@@ -3,11 +3,6 @@
 class SearchController extends Application_Controller_Cli
 {
 
-
-	/**
-	 *	Just run
-	 *  php cli.php
-	 */
 	public function indexAction ()
 	{
 		$genre = $this->getParam('genre');

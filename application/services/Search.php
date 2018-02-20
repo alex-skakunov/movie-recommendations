@@ -17,7 +17,7 @@ class Service_Search extends Service_Abstract {
         return $this;
     }
 
-    public function setResultsOrderStrategy($strategy) {
+    public function setOrderStrategy($strategy) {
         $this->_resultsOrderStrategy = $strategy;
         return $this;
     }
@@ -34,6 +34,10 @@ class Service_Search extends Service_Abstract {
         $data = Service_Database::getInstance()->getData();
         foreach ($this->_searchStrategiesList as $strategy) {
             $data = $strategy->search($data, $searchSpec);
+        }
+
+        if (!empty($this->_resultsOrderStrategy)) {
+            $data = $this->_resultsOrderStrategy->order($data);    
         }
 
         return $data;
