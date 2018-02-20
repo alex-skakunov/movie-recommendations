@@ -1,11 +1,11 @@
 <?php
 
 /**
- * a service to implement search
+ * an object to represent a movie
  * @author Alexander
  * @since 2018-02-20
  */
-class ValueObject_Database_Record {
+class ValueObject_Movie_Record {
 
     protected $_name = '';
     protected $_rating = 0;

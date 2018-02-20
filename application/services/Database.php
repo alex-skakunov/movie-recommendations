@@ -10,7 +10,7 @@ class Service_Database extends Service_Abstract {
     static protected $_instance;
 
     /**
-     * ValueObject_Database_Record[]
+     * ValueObject_Movie_Record[]
      */
     protected $_data = array();
 
@@ -43,7 +43,7 @@ class Service_Database extends Service_Abstract {
 
         $array = json_decode($json, 1);
         foreach ($array as $item) {
-            $this->_data[] = new ValueObject_Database_Record($item);
+            $this->_data[] = new ValueObject_Movie_Record($item);
         }
     }
 }

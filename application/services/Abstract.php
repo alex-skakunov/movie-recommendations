@@ -8,11 +8,4 @@ class Service_Abstract {
         }
         return static::$_instance;
     }
-
-    public function save($object) {
-        $em = Zend_Registry::get('entitymanager');
-        $em->persist($object);
-        $em->flush();
-        return $object;
-    }
 }

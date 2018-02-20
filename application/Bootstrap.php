@@ -27,6 +27,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addResourceType('exception', 'exceptions/', 'Exception')
             ->addResourceType('service', 'services/', 'Service')
             ->addResourceType('valueobject', 'valueobjects/', 'ValueObject')
+            ->addResourceType('strategy', 'strategies/', 'Strategy')
             
      //       ->addResourceType('form', 'forms/', 'Form')
      //       ->addResourceType('validate', 'validators/', 'Validate')
@@ -58,6 +59,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initSearch()
     {
+        Service_Search::getInstance()
+            ->addSearchStrategy(new Strategy_Search_Genre)
+            ->addSearchStrategy(new Strategy_Search_Showing);
+        
         Zend_Registry::set('Search', Service_Search::getInstance());
         date_default_timezone_set($this->_config['timezone']['default']);
     }

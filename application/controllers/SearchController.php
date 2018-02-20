@@ -32,7 +32,7 @@ class SearchController extends Application_Controller_Cli
 		}
 
 		foreach($resultset as $item) {
-			$this->writeLine(sprintf('%s, showing at %s', $item->getName(), $item->getShowing()->format('g a')));
+			$this->writeLine(sprintf('%s, showing at %s', $item->getName(), current($item->getShowings())->format('g a')));
 		}
 	}
 
