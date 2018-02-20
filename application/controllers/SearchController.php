@@ -15,20 +15,15 @@ class SearchController extends Application_Controller_Cli
 				->setShowing($time);
 		}
 		catch(Exception_Search_Spec_InitFailed $e) {
-			$this->writeLine('Wrong data. Check your parameters');
+			echo 'Wrong data. Check your parameters', chr(10);
 			return false;
 		}
+
 		$searchService = Zend_Registry::get('Search');
 		$resultset = $searchService->search($searchSpec);
 
-		if(0 == sizeof($resultset)) {
-			$this->writeLine('No movie recommendations.');
-			return false;
-		}
-
-		foreach($resultset as $item) {
-			$this->writeLine(sprintf('%s, showing at %s', $item->getName(), current($item->getShowings())->format('g a')));
-		}
+		$view = new ViewHelper_Search_Result;
+		$view->render($resultset, $searchSpec, 30);
 	}
 
 }

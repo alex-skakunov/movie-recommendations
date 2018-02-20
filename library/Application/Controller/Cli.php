@@ -35,44 +35,6 @@ class Application_Controller_Cli extends Zend_Controller_Action
 		}
 	}
 
-
-	public function writeLine ($string, $new_line = true)
-	{
-		echo $string;
-		echo $new_line ? PHP_EOL : '';
-	}
-
-
-	public function confirmYes ($message)
-	{
-		echo $message, ' [y/N] ';
-		$answer = $this->readLine ('N');
-
-		return $answer == 'y';
-	}
-
-
-	public function readLine ($default = '')
-	{
-		$this->flush ();
-
-		if (empty ($this->stdin))
-		{
-			$this->stdin = fopen ('php://stdin', 'r');
-		}
-
-		$line = fgets ($this->stdin);
-		$line = trim ($line);
-
-		if ('' == $line)
-		{
-			$line = $default;
-		}
-
-		return $line;
-	}
-
-
 	function flush ()
 	{
 		while (ob_get_level())

@@ -10,16 +10,11 @@ class Strategy_Search_Showing extends Strategy_Search_Abstract {
     public function search(array $data, ValueObject_Search_Spec $searchSpec) {
         $resultset = array();
         foreach($data as $movieRecord) {
-            foreach ($movieRecord->getShowings() as $showingDateTime) {
-                $interval = $searchSpec->getShowing()->diff($showingDateTime, false);
-                $hours   = (int)$interval->format('%r%h'); 
-                $minutes = (int)$interval->format('%i');
-                $diffInMinutes = ($hours * 60 + $minutes);
-                if ($diffInMinutes >= 30) {
-                    $resultset[] = $movieRecord;
-                    continue(2);
-                }
+            $closestShowing = $movieRecord->getClosestShowingWithinTimeframe($searchSpec->getShowing(), 30);
+            if (empty($closestShowing)) {
+                continue;
             }
+            $resultset[] = $movieRecord;
         }
         return $resultset;
     }

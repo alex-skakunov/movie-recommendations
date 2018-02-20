@@ -28,6 +28,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addResourceType('service', 'services/', 'Service')
             ->addResourceType('valueobject', 'valueobjects/', 'ValueObject')
             ->addResourceType('strategy', 'strategies/', 'Strategy')
+            ->addResourceType('helpers', 'views/helpers/', 'ViewHelper')
+
             
      //       ->addResourceType('form', 'forms/', 'Form')
      //       ->addResourceType('validate', 'validators/', 'Validate')

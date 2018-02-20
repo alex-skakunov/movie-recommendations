@@ -39,4 +39,25 @@ class ValueObject_Movie_Record {
     public function getShowings() {
         return $this->_showings;
     }
+
+    public function getClosestShowingWithinTimeframe(DateTime $start, $offset) {
+        $showing = null;
+        $minDifference = 10000;
+        foreach ($this->_showings as $showingDateTime) {
+            $interval = $start->diff($showingDateTime, false);
+            $hours   = (int)$interval->format('%r%h'); 
+            $minutes = (int)$interval->format('%i');
+            $diffInMinutes = ($hours * 60 + $minutes);
+            if ($diffInMinutes < $offset) {
+                continue;
+            }
+
+            if ($diffInMinutes < $minDifference) {
+                $minDifference = $diffInMinutes;
+                $showing = $showingDateTime;
+            }
+        }
+        return $showing;
+    }
+
 }
