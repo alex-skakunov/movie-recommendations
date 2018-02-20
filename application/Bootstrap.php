@@ -14,6 +14,34 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			->setRequest (new Zend_Controller_Request_Simple ());
 	}
 
+    protected function _initAutoloader()
+    {
+        $resourceLoader = new Zend_Loader_Autoloader_Resource(
+            array(
+                'namespace' => '',
+                'basePath' => APPLICATION_PATH,
+            )
+        );
+
+        $resourceLoader
+            ->addResourceType('exception', 'exceptions/', 'Exception')
+            ->addResourceType('service', 'services/', 'Service')
+            ->addResourceType('valueobject', 'valueobjects/', 'ValueObject')
+            
+     //       ->addResourceType('form', 'forms/', 'Form')
+     //       ->addResourceType('validate', 'validators/', 'Validate')
+     //       ->addResourceType('plugin', 'plugins/', 'Plugin')
+            ;
+        Zend_Loader_Autoloader::getInstance()->pushAutoloader($resourceLoader);
+        Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
+        return $resourceLoader;
+    }
+
+    protected function _initConfig() {
+        $this->_config = new Zend_Config($this->getApplication()->getOptions());
+        $this->_config = $this->_config->toArray();
+        Zend_Registry::set('config', $this->_config); 
+    }
 
 	protected function _initError ()
 	{
@@ -26,4 +54,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
 		return $error;
 	}
+
+
+    protected function _initSearch()
+    {
+        Zend_Registry::set('Search', Service_Search::getInstance());
+        date_default_timezone_set($this->_config['timezone']['default']);
+    }
+    
 }

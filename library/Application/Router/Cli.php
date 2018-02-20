@@ -8,7 +8,7 @@ class Application_Router_Cli extends Zend_Controller_Router_Abstract
 		$getopt = new Zend_Console_Getopt (array ());
 		$arguments = $getopt->getRemainingArgs ();
 		
-		$controller = 'index';
+		$controller = 'search';
 		$action = 'index';
 		
 		if ($arguments)
@@ -17,26 +17,16 @@ class Application_Router_Cli extends Zend_Controller_Router_Abstract
 			
 			if ($arguments)
 			{
-				$action = array_shift ($arguments);
-				$pattern_valid_action = '~^\w+[\-\w\d]+$~';
-				if (false == preg_match ($pattern_valid_action, $action))
+				foreach ($arguments as $arg)
 				{
-					echo "Invalid action $action.\n", exit ();
-				}
-				
-				if ($arguments)
-				{
-					foreach ($arguments as $arg)
+					$parameter = explode ('=', $arg, 2);
+					if (false == isset ($parameter [1]))
 					{
-						$parameter = explode ('=', $arg, 2);
-						if (false == isset ($parameter [1]))
-						{
-							$parameter [1] = true;
-						}
-						
-						$dispatcher->setParam ($parameter [0], $parameter [1]);
-						unset ($parameter);
+						$parameter [1] = true;
 					}
+					
+					$dispatcher->setParam ($parameter [0], $parameter [1]);
+					unset ($parameter);
 				}
 			}
 		}
