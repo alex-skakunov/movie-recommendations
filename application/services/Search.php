@@ -12,12 +12,17 @@ class Service_Search extends Service_Abstract {
     protected $_searchStrategiesList = array();
     protected $_resultsOrderStrategy = null;
 
-    public function addSearchStrategy($strategy) {
+    public function eraseSearchStrategies() {
+        $this->_searchStrategiesList = array();
+        return $this;
+    }
+
+    public function addSearchStrategy(Strategy_Search_Abstract $strategy) {
         $this->_searchStrategiesList[] = $strategy;
         return $this;
     }
 
-    public function setOrderStrategy($strategy) {
+    public function setOrderStrategy(Strategy_Order_Abstract $strategy) {
         $this->_resultsOrderStrategy = $strategy;
         return $this;
     }
